@@ -1,0 +1,16 @@
+0 0 0 1 "Road 1" mapEdge
+0 1 0 0 "Road 1" mapEdge
+0 1 0 2 "Road 2" mapEdge
+0 2 0 1 "Road 2" mapEdge
+0 2 1 2 "Road 3" mapEdge
+1 2 0 2 "Road 3" mapEdge
+1 2 2 2 "Road 4" mapEdge
+2 2 1 2 "Road 4" mapEdge
+2 2 2 1 "Road 5" mapEdge
+2 1 2 2 "Road 5" mapEdge
+2 1 2 0 "Road 6" mapEdge
+2 0 2 1 "Road 6" mapEdge
+2 0 1 0 "Road 7" mapEdge
+1 0 2 0 "Road 7" mapEdge
+1 0 0 0 "Road 8" mapEdge
+0 0 1 0 "Road 8" mapEdge

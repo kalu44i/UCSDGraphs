@@ -1,0 +1,7 @@
+0 0 -1 1 "Zig" mapEdge
+-1 1 1 2 "Zag" mapEdge
+1 2 0 3 "Left" mapEdge
+0 3 4 4 "Mid" mapEdge
+0 0 2 2 "Right" mapEdge
+2 2 4 4 "Right" mapEdge
+4 4 0 4 "Upper" mapEdge

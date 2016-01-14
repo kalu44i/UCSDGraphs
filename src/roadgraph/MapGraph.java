@@ -241,6 +241,14 @@ public class MapGraph {
         priorityQueue.add(sPoint);
         while (!priorityQueue.isEmpty()) {
             MapPoint curr = priorityQueue.poll();
+            if (curr != null && !checkVisited(curr, visited)) {
+//                    System.out.println("Update");
+                updateParentMap(curr, parentMap);
+            }
+            GeographicPoint ps = new GeographicPoint(32.869423, -117.220917);
+            if (curr.getMapNode().getLocation().equals(ps)) {
+                System.out.println("Found in ");
+            }
             i++;
             //check if current object isn't in Visited
             if (!visited.contains(curr)) {
@@ -254,6 +262,10 @@ public class MapGraph {
                 //get neigbours of DijkastraPoint
                 List<MapPoint> neigbours = getNeigboursMapPoints(curr, null);
                 for (MapPoint mapPoint : neigbours) {
+//                    GeographicPoint p = new GeographicPoint(32.869423, -117.220917);
+//                    if (mapPoint.getMapNode().getLocation().equals(p)) {
+//                        System.out.println("Found in neigbours");
+//                    }
                     //check if point was visited before
                     if (!checkVisited(mapPoint, visited)) {
                         //Get MapNode objects
@@ -278,13 +290,8 @@ public class MapGraph {
                 }
 
                 //get DijkastraPoint woth High Priority, with least distance
+
                 MapPoint point = priorityQueue.peek();
-
-                //check if point is not visited before.
-                if (point != null && !checkVisited(point, visited)) {
-                    updateParentMap(point, parentMap);
-                }
-
             }
         }
 
@@ -294,7 +301,7 @@ public class MapGraph {
         }
 
         // Hook for visualization.  See writeup.
-        //nodeSearched.accept(next.getLocation());
+//        nodeSearched.accept(next.getLocation());
         System.out.println("Dijkstra - " + i);
         return getPathDijkastra(start, goal, parentMap);
     }
@@ -347,9 +354,16 @@ public class MapGraph {
      * @param parentMap
      */
     private void updateParentMap(MapPoint point, Map<GeographicPoint, GeographicPoint> parentMap) {
-        GeographicPoint previousPoint = point.getPreviousNode().getLocation();
-        GeographicPoint currPoint = point.getMapNode().getLocation();
-        parentMap.put(currPoint, previousPoint);
+        try {
+            if (point.getPreviousNode() != null) {
+                GeographicPoint previousPoint = point.getPreviousNode().getLocation();
+                GeographicPoint currPoint = point.getMapNode().getLocation();
+                parentMap.put(currPoint, previousPoint);
+            }
+        } catch (Exception e) {
+            System.out.println(point.getDistance());
+        }
+
     }
 
 
@@ -517,11 +531,11 @@ public class MapGraph {
         GeographicPoint start = new GeographicPoint(32.8648772, -117.2254046);
         GeographicPoint end = new GeographicPoint(32.8660691, -117.217393);
 
-//        List<GeographicPoint> route = theMap.dijkstra(start,end);
-        List<GeographicPoint> route2 = theMap.aStarSearch(start,end);
-        for (GeographicPoint gp : route2) {
-            System.out.println(gp.toString());
-        }
+        List<GeographicPoint> route = theMap.dijkstra(start, end);
+        List<GeographicPoint> route2 = theMap.aStarSearch(start, end);
+//        for (GeographicPoint gp : route2) {
+//            System.out.println(gp.toString());
+//        }
 
     }
 

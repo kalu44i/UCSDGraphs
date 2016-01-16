@@ -11,7 +11,6 @@ import geography.GeographicPoint;
 import util.GraphLoader;
 
 import java.util.*;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -245,16 +244,18 @@ public class MapGraph {
 //                    System.out.println("Update");
                 updateParentMap(curr, parentMap);
             }
-            GeographicPoint ps = new GeographicPoint(32.869423, -117.220917);
-            if (curr.getMapNode().getLocation().equals(ps)) {
-                System.out.println("Found in ");
-            }
+            nodeSearched.accept(curr.getMapNode().getLocation());
+//            GeographicPoint ps = new GeographicPoint(32.869423, -117.220917);
+//            if (curr.getMapNode().getLocation().equals(ps)) {
+//                System.out.println("Found in ");
+//            }
             i++;
             //check if current object isn't in Visited
             if (!visited.contains(curr)) {
                 visited.add(curr);
                 //check if current equals goal
                 if (curr.equals(gPoint)) {
+                    System.out.println("Distance: " + curr.getDistance());
                     isFound = true;
                     updateParentMap(curr, parentMap);
                     break;
@@ -429,12 +430,17 @@ public class MapGraph {
         priorityQueue.add(startNode);
         while (!priorityQueue.isEmpty()) {
             MapPoint curr = priorityQueue.poll();
+            if (curr != null && !checkVisited(curr, visited)) {
+                updateParentMap(curr, parentMap);
+            }
+            nodeSearched.accept(curr.getMapNode().getLocation());
             i++;
             //check if current object isn't in Visited
             if (!visited.contains(curr)) {
                 visited.add(curr);
                 //check if current equals goal
                 if (curr.equals(goalNode)) {
+                    System.out.println("Distance: " + curr.getDistance());
                     isFound = true;
                     updateParentMap(curr, parentMap);
                     break;
@@ -469,10 +475,6 @@ public class MapGraph {
                 MapPoint point = priorityQueue.peek();
 
                 //check if point is not visited before.
-                if (point != null && !checkVisited(point, visited)) {
-                    updateParentMap(point, parentMap);
-                }
-
             }
         }
 
@@ -486,7 +488,7 @@ public class MapGraph {
         System.out.println("A star search - " + i);
         return getPathDijkastra(start, goal, parentMap);
         // Hook for visualization.  See writeup.
-        //nodeSearched.accept(next.getLocation());
+
     }
 
 
@@ -533,9 +535,6 @@ public class MapGraph {
 
         List<GeographicPoint> route = theMap.dijkstra(start, end);
         List<GeographicPoint> route2 = theMap.aStarSearch(start, end);
-//        for (GeographicPoint gp : route2) {
-//            System.out.println(gp.toString());
-//        }
 
     }
 

@@ -466,6 +466,7 @@ public class MapGraph {
                         }
 
                         mapPoint.setDistance(curr.getDistance() + mapEdge.getLength());
+                        mapPoint.setDistanceSum(curr.getDistance() + mapEdge.getLength() + mapPoint.getDistToGoal());
                         mapPoint.setPreviousNode(currNode);
                         priorityQueue.add(mapPoint);
                     }
@@ -477,7 +478,6 @@ public class MapGraph {
                 //check if point is not visited before.
             }
         }
-
         if (!isFound) {
             System.out.println("No path exists");
             return null;

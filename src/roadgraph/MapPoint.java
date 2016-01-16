@@ -42,8 +42,8 @@ public abstract class MapPoint implements Comparable {
         return distanceSum;
     }
 
-    public void setDistanceSum(Double distance) {
-        this.distanceSum = distToGoal + distance;
+    public void setDistanceSum(Double distanceSum) {
+        this.distanceSum = distanceSum;
     }
 
     public Double getDistance() {
